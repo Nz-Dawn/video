@@ -1,0 +1,31 @@
+@charset "utf-8";
+/* CSS Document */
+/*初始化*/
+*{padding: 0px;margin: 0px;border: 0px;font-family: "微软雅黑";}
+body { font: 14px "Lato", Arial, sans-serif;}
+a {text-decoration: none;}
+input, select, textarea,label{font-family: "微软雅黑"}
+a img {border: none;outline-width: 0px;vertical-align: center;}
+li {list-style: none;text-decoration:none}
+a:focus {outline-style:none; -moz-outline-style: none;}
+*:focus {outline: none;}
+html{background: #eff3f6}
+
+.ovhead{overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+.layui-col-space10>*{padding: 10px;}
+.layui-card-header{padding: 10px 0px;margin: 0 15px;border-bottom:1px solid #ddd}
+.layui-card-header .header_t{font-size: 18px;color: #484d5e;display: inline-block;line-height: 42px;height: 42px;width: 78%;float: left;}
+.layui-card-header .header_type_development{float: right;margin-top:8px;background: #fff;border:1px solid #FF5722;color: #FF5722}
+.layui-card-header .header_type_test{float: right;margin-top:8px;background: #fff;border:1px solid #FFB800;color: #FFB800}
+.layadmin-takerates .layui-progress h3{font-size: 16px;color: #999}
+.layui-card-body{padding: 0 15px;margin: 10px 0}
+.layui-card-body .layui-solid{border-right: 1px solid #ddd}
+.number p{font-size: 16px;color: #999}
+.number p.number_n{color: #333}
+.number p.number_n span{color: #37aff7}
+.layui-card-cont{padding: 30px 15px 0px 15px;display: inline-block;width:96%;}
+.layui-card-cont p{float: left;color: #484d5e;line-height: 55px;margin-right: 20px;font-size: 16px}
+.layui-content-ul li{margin: 0 10px;float: left;display: inline-block;margin-bottom: 10px;}
+.layui-content-ul li img{border-radius: 50%;}
+.layui-content-ul{width: 90%;float: left}
+.layui-fluid .layui-col-md6:nth-child(4n+4){clear: both}

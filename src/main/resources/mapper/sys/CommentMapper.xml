@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zd.video.dao.sys.CommentMapper">
+  <resultMap id="BaseResultMap" type="com.zd.video.po.sys.Comment">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="touserid" jdbcType="INTEGER" property="touserid" />
+    <result column="tovideoid" jdbcType="INTEGER" property="tovideoid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="createtime" jdbcType="VARCHAR" property="createtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, comment, userid, touserid, tovideoid, username, createtime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_comment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getCommentListCount" resultType="Integer">
+		select count(id) from t_comment where 1=1
+	</select>
+  <select id="selectAllComment" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_comment
+  </select>
+  <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_comment
+    where touserid = #{touserid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByVideoId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_comment
+    where tovideoid = #{tovideoid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_comment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zd.video.po.sys.Comment">
+    insert into t_comment (id, comment, userid, 
+      touserid, tovideoid, username, 
+      createtime)
+    values (#{id,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, 
+      #{touserid,jdbcType=INTEGER}, #{tovideoid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zd.video.po.sys.Comment">
+    insert into t_comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="touserid != null">
+        touserid,
+      </if>
+      <if test="tovideoid != null">
+        tovideoid,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="touserid != null">
+        #{touserid,jdbcType=INTEGER},
+      </if>
+      <if test="tovideoid != null">
+        #{tovideoid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zd.video.po.sys.Comment">
+    update t_comment
+    <set>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="touserid != null">
+        touserid = #{touserid,jdbcType=INTEGER},
+      </if>
+      <if test="tovideoid != null">
+        tovideoid = #{tovideoid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zd.video.po.sys.Comment">
+    update t_comment
+    set comment = #{comment,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=INTEGER},
+      touserid = #{touserid,jdbcType=INTEGER},
+      tovideoid = #{tovideoid,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zd.video.dao.sys.BranchDao">
+	<!-- 增加部门 -->
+	<insert id="insertBranch">
+		insert t_branch(
+			id,
+			<if test="pid !=null and pid!='' or pid==0">
+			pid,
+			</if>
+			name,
+			uname,
+			tel,
+			info,
+			morder
+		)values(
+			#{id},
+			<if test="pid !=null and pid!='' or pid==0">
+			#{pid},
+			</if>
+			#{name},
+			#{uname},
+			#{tel},
+			#{info},
+			#{morder}
+		)
+	</insert>
+	
+	<!-- 根据ID获取部门信息 -->
+	<select id="getBranchById" resultType="com.zd.video.po.sys.Branch">
+		select *from t_branch where id=#{id}
+	</select>
+	
+	<!-- 根据ERP_ID获取部门信息 -->
+	<select id="getBranchByErpId" resultType="com.zd.video.po.sys.Branch">
+		select *from t_branch where 1=1  LIMIT 1
+	</select>
+	
+	<!-- 根据name获取部门信息 -->
+	<select id="getBranchByName" resultType="com.zd.video.po.sys.Branch">
+		select *from t_branch where name=#{name}
+	</select>
+	
+	<!-- 查询全部 -->
+	<select id="getBranchList" resultType="com.zd.video.po.sys.Branch">
+		select * from t_branch where 1=1
+		<if test="null != id ">
+			and id = #{id}
+		</if>
+		<if test="null != name and name != ''">
+			and name like concat('%',#{name},'%')
+		</if>
+		<if test="pid !=null and pid!='' or pid==0">
+			and pid=#{pid}
+		</if>
+		<if test="nopid !=null and nopid!=''">
+			and pid !=#{nopid} and id !=#{nopid}
+		</if>
+		<if test="null != uname and uname != ''">	
+			and uname like concat('%',#{uname},'%')
+		</if>
+		<if test="null != tel and tel != ''">
+			and tel like concat('%',#{tel},'%')
+		</if>
+		<if test="null != info">
+			and info =#{info}
+		</if>
+		<if test="null!=morder">
+			and morder=#{morder}	
+		</if> 
+		order by morder asc
+		<if test="pageSize>0">
+			limit #{currPage},#{pageSize}
+		</if>
+	</select>
+	
+	<!-- 获取客户单位 -->
+	<select id="getCustomerHead2Map" resultType="java.util.Map"> 
+		select id as customerId,left(name,2) as customer from t_branch where pid =2 
+	</select>
+	
+	<select id="getCustomerErpIdMap" resultType="java.util.Map"> 
+		select id as customerId as customer from t_branch where pid =2 
+	</select>
+	
+	<!-- 查询全部条数 -->
+	<select id="getBranchListCount" resultType="Integer"> 
+		select count(id) from t_branch where 1=1
+		<if test="null != name and name != ''">
+			and name like concat('%',#{name},'%')
+		</if>
+		<if test="pid !=null and pid!='' or pid==0">
+			and pid=#{pid}
+		</if>
+		<if test="nopid !=null and nopid!=''">
+			and pid !=#{nopid} and id !=#{nopid}
+		</if>
+		<if test="null != uname and uname != ''">	
+			and uname like concat('%',#{uname},'%')
+		</if>
+		<if test="null != tel and tel != ''">
+			and tel like concat('%',#{tel},'%')
+		</if>
+		<if test="null != info">
+			and info =#{info}
+		</if>
+		<if test="null!=morder">
+			and morder=#{morder}	
+		</if>
+	</select>
+	
+	<!-- 获取子栏目数量 -->
+	<select id="getBranchCountByPid" resultType="Integer"> 
+		select count(id) from t_branch where pid=#{pid}
+	</select>
+	
+	<!-- 修改部门信息 -->
+	<update id="updateBranchById">
+		update t_branch set
+			name =#{name},
+			uname=#{uname},
+			tel=#{tel},
+			info=#{info},
+			morder=#{morder},
+			<if test="pid !=null and pid!='' or pid==0">
+				pid=#{pid}
+			</if>
+			where id = #{id}
+	</update>
+	
+	<!-- 删除部门信息 -->
+	<delete id="deleteBranchById">
+		delete from t_branch where id in
+		 <foreach collection="array" item="arr" index="no" open="("
+            separator="," close=")">
+            #{arr}
+        </foreach>
+	</delete>
+	
+	<!-- 根据名称查询部门Id -->
+	<select id="getBranchIdByName" resultType="Integer"> 
+		SELECT id FROM t_branch where NAME = #{name} LIMIT 1
+	</select>
+	
+	<!-- 导入 添加一级菜单 -->
+	<insert id="insertMenu" keyProperty="id" useGeneratedKeys="true" parameterType="com.zd.video.po.sys.Branch">
+		insert t_branch(
+			<if test="pid !=null and pid!='' or pid==0">
+			pid,
+			</if>
+			name,
+			uname,
+			tel,
+			info,
+			morder
+		)values(
+			<if test="pid !=null and pid!='' or pid==0">
+			#{pid},
+			</if>
+			#{name},
+			#{uname},
+			#{tel},
+			#{info},
+			#{morder}
+		)
+	</insert>
+	
+	<!-- 根据部门Id获取子部门信息 -->
+	<select id="getBranchByPid" resultType="com.zd.video.po.sys.Branch">
+		SELECT u.tname,b.name,u.id AS uId
+        FROM t_branch b
+				LEFT JOIN t_user u ON b.id = u.branch_id
+        WHERE b.id = #{pid}
+	</select>
+</mapper>

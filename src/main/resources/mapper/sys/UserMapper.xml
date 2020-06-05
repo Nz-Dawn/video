@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zd.video.dao.sys.UserDao">
+	<!-- 增加用户 -->
+	<insert id="insertUser" keyProperty="id" useGeneratedKeys="true" >
+		insert t_user(
+		id, type, status, uname, tname, face, pwd, branch_id, role_id,order_by
+		)values(
+		#{id}, 2, #{status}, #{uname}, #{tname}, #{face}, #{pwd}, #{branchId},#{roleId},#{orderBy}
+		)
+	</insert>
+	
+	<!-- 批量插入用户 -->
+	<insert id="insertUserList">
+		insert t_user(
+		type, status, uname, tname, face, pwd, branch_id, role_id,order_by
+		)values
+		<foreach collection="list" item="item" index="index" separator=",">
+		(
+		2, #{item.status}, #{item.uname}, #{item.tname}, #{item.face}, #{item.pwd}, #{item.branchId}, #{item.roleId},#{item.orderBy}
+		)
+		</foreach>
+	</insert>
+	
+	<!-- 根据ID获取用户信息 -->
+	<select id="getUserById" resultType="com.zd.video.po.sys.User">
+		select u.*,b.`name` AS branchName,r.`name` AS roleName from t_user u  
+		LEFT JOIN t_branch b ON b.id=u.branch_id
+		LEFT JOIN t_role r ON r.id=u.role_id
+		where u.id=#{id}
+	</select>
+	
+	<!-- 根据IDs获取用户信息 s-->
+	<select id="getUserNamsByUserIds" resultType="String"> 
+		select GROUP_CONCAT(t2.tname) user_names from t_user t2
+		where FIND_IN_SET(t2.id, #{userIds}) > 0 
+	</select>
+	
+	<!-- 根据用户名，密码获取用户信息 -->
+	<select id="checkUserLogin" resultType="com.zd.video.po.sys.User">
+		select u.*,b.`name` AS branchName,r.`name` AS roleName from t_user u  
+		LEFT JOIN t_branch b ON b.id=u.branch_id
+		LEFT JOIN t_role r ON r.id=u.role_id
+		where (u.uname=#{uname} or u.phone=#{uname}) and u.pwd=#{pwd}
+	</select>
+	
+	<!-- 根据部门获取部门下的用户 -->
+	<select id="getUserListByBranchId" resultType="com.zd.video.po.sys.User">
+		select * from t_user where 
+		branch_id=#{bid}
+		<if test="null != uid and uid !=''">
+			and id!=#{uid}
+		</if>
+	</select>
+	
+	<!-- 查询全部 -->
+	<select id="getUserList" resultType="com.zd.video.po.sys.User">
+		select u.*,b.name AS branchName,r.name AS roleName from t_user u  
+		LEFT JOIN t_branch b ON b.id=u.branch_id
+		LEFT JOIN t_role r ON r.id=u.role_id
+		where 1=1
+		<if test="null != type and type !=''">
+			and u.type!=#{type}
+		</if>
+		<if test="null != unameTemp and unameTemp !=''">
+			and (u.uname like concat('%',#{unameTemp},'%')  or u.tname like concat('%',#{unameTemp},'%'))
+		</if>
+		<if test="null != uname and uname !=''">
+			and u.uname like concat('%',#{uname},'%') 
+		</if>
+		<if test="null != tname and tname !=''">
+			and u.tname like concat('%',#{tname},'%')   
+		</if>
+		<if test="null != branchId and branchId !=''">
+			and (u.branch_Id = #{branchId} or b.pid = #{branchId})
+		</if>
+		<if test="null != roleId and roleId !=''">
+			and u.role_id = #{roleId}
+		</if>
+		order by u.order_by asc
+		<if test="pageSize>0">
+			limit #{currPage},#{pageSize}
+		</if>
+	</select>
+	
+	<!-- 根据登录用户名查询用户是否存在 -->
+	<select id="getUserByLoginName" resultType="Integer">
+		select count(id) from t_user where uname=#{uname}
+		<if test="null != id and id !=''">
+			and id!=#{id}
+		</if>
+	</select>
+
+	<select id="getUserByLogin" resultType="com.zd.video.po.sys.User">
+		select * from t_user where uname=#{uname}
+	</select>
+	
+	<!-- 查询列表数量信息 -->
+	<select id="getUserListCount" resultType="Integer">
+		select count(id) from t_user where 1=1 
+		<if test="null != uname and uname !=''">
+			and uname like concat('%',#{uname},'%') 
+		</if>
+		<if test="null != type and type !=''">
+			and type!=#{type}
+		</if>
+		<if test="null != unameTemp and unameTemp !=''">
+			and (uname like concat('%',#{unameTemp},'%')  or tname like concat('%',#{unameTemp},'%'))
+		</if>
+		<if test="null != tname and tname !=''">
+			and tname like concat('%',#{tname},'%')   
+		</if>
+		<if test="null != branchId and branchId !=''">
+			and branch_Id = #{branchId}
+		</if>
+		<if test="null != roleId and roleId !=''">
+			and role_id = #{roleId}
+		</if>
+	</select>
+	
+	 
+	<!-- 修改用户信息 -->
+	<update id="updateUserById">
+		update t_user set
+			<if test="null != type">
+			type=#{type},
+			</if>
+			<if test="null != status">
+			status=#{status},
+			</if>
+			<if test="null != uname">
+			uname=#{uname},
+			</if>
+			<if test="null != tname">
+			tname=#{tname},
+			</if>
+			<if test="null != pwd and pwd != ''">
+			pwd=#{pwd},
+			</if>
+			<if test="null != branchId">
+			branch_id = #{branchId},
+			</if>
+			<if test="null != face and face != '' ">
+			face = #{face},
+			</if>
+			<if test="null != roleId">
+			role_id =#{roleId},
+			</if>
+			<if test="null != orderBy">
+			order_by =#{orderBy},
+			</if>
+			id=#{id}
+			where id =#{id}
+	</update>
+	
+	<!-- 删除用户信息 -->
+	<delete id="deleteUserById">
+		delete from t_user where id in
+		 <foreach collection="array" item="arr" index="no" open="("
+            separator="," close=")">
+            #{arr}
+        </foreach>
+	</delete>
+	
+	
+	<!-- 用户操作日志信息 -->
+	<insert id="insertLog" useGeneratedKeys="true" keyProperty="id" parameterType="com.zd.video.po.sys.Log">
+		insert t_log(
+			id, uname, tname, content, add_time
+		)values(
+		 	#{id}, #{uname}, IFNULL(#{tname},#{uname}), #{content}, #{addTimeSecond}
+		)
+	</insert>
+	
+	<select id="getLogList" resultType="com.zd.video.po.sys.Log">
+		SELECT * FROM t_log where 1=1
+		<if test="null!= content and content!=''">
+			and content like concat('%',#{content},'%') 
+		</if>
+		order by add_time desc
+		<if test="pageSize>0">
+			limit #{currPage},#{pageSize}
+		</if>
+	</select>
+	
+	<select id="getLogListCount" resultType="Integer">
+		SELECT count(*) FROM t_log where 1=1
+		<if test="null!= content and content!=''">
+			and content like concat('%',#{content},'%') 
+		</if>
+	</select>
+	
+	<delete id="deleteLog">
+		delete from t_log where id in
+		 <foreach collection="array" item="arr" index="no" open="("
+            separator="," close=")">
+            #{arr}
+        </foreach>
+	</delete>
+
+	<!-- 根据名称查询Id -->
+	<select id="getUserIdByName" resultType="Integer"> 
+		SELECT id FROM t_user where tname = #{name} LIMIT 1
+	</select>
+	
+	<select id="selectUsersByUname" resultType="com.zd.video.po.sys.User">
+		select * from t_user where uname = #{uname}
+	</select>
+	
+	<select id="getUserNameById" resultType="String">
+		select IFNULL(tname,uname) from t_user where id = #{id}
+	</select>
+	<select id="getDeptAndUserList" resultType="java.util.Map">
+				SELECT
+	concat('branch',b.id) as id,
+	concat('branch',b.pid) as pId,
+	b.`name`,
+	'' AS post
+FROM
+	t_branch b
+UNION
+	SELECT
+		u.id,
+		concat('branch',u.branch_id) AS pId,
+		u.tname,
+		i.post
+	FROM
+		t_user u
+	LEFT JOIN t_user_info i ON u.id = i.u_id
+	</select>
+	<select id="getUserBypid" resultType="com.zd.video.po.sys.User">
+	 SELECT u.tname,b.name,u.id AS uId
+     FROM t_branch b
+	 LEFT JOIN t_user u ON b.id = u.branch_id
+     WHERE b.pid = #{pid}
+	</select>
+	<select id="getBugCountByTnameAndStatus" resultType="Integer">
+	SELECT COUNT(b.id) 
+    FROM t_user u
+	LEFT JOIN t_project p ON p.u_id = u.id
+	LEFT JOIN t_bug b ON b.project_id = p.id
+	WHERE  b.status = #{status}
+    <if test="null != tname ">
+    AND u.tname = #{tname}
+    </if>
+   </select>
+   <select id="getIdsByTnameAndStatus" resultType="String">
+   SELECT GROUP_CONCAT( DISTINCT b.project_id) AS projectIdStr
+    FROM t_user u
+	LEFT JOIN t_project p ON p.u_id = u.id
+	LEFT JOIN t_bug b ON b.project_id = p.id
+	WHERE  b.status = #{status}
+    <if test="null != tname ">
+    AND u.tname = #{tname}
+    </if>
+   </select>
+   
+   <!-- 查询部门的人 -->
+   <select id="getUserByBranchId" resultType="com.zd.video.po.sys.User">
+  	 select * from t_user  where branch_id =#{branchId}
+   </select>
+   
+   <!-- 根据用户名称获取用户userid -->
+   <select id="getUserByTname" resultType="Integer">
+   		SELECT id from t_user where tname = #{tname} limit 1
+   </select>
+   
+   <!-- 根据userId获取dingUid -->
+   <select id="getDingUidByUserId" resultType="String">
+   		SELECT ding_uid from t_user where id = #{userId}
+   </select>
+   
+   <!-- 更新用户钉钉用户的 uid -->
+   	<update id="updateDingUidByUserId">
+   		update t_user set ding_uid =#{dingUid} where id = #{userId}
+   	</update>
+
+	<!-- 插入钉钉推送记录 -->
+   	<insert id="insertDingNotice">
+		insert t_ding_notice(
+			 user_id,content, result, add_time
+		)values(
+			  #{userId},#{content},#{result},unix_timestamp()
+		)
+	</insert>
+</mapper>

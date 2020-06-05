@@ -1,0 +1,72 @@
+@charset "utf-8";
+/* CSS Document */
+/*初始化*/
+*{padding: 0px;margin: 0px;border: 0px;font-family: "微软雅黑";}
+body { font: 14px "Lato", Arial, sans-serif;}
+a {text-decoration: none;}
+input, select, textarea,label{font-family: "微软雅黑"}
+a img {border: none;outline-width: 0px;vertical-align: center;}
+li {list-style: none;text-decoration:none}
+a:focus {outline-style:none; -moz-outline-style: none;}
+*:focus {outline: none;}
+html{background: #eff3f6}
+
+.ovhead{overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+.layui-col-space10>*{padding: 10px;}
+.layui-card-header{padding: 10px 0px;margin: 0 15px;border-bottom:1px solid #ddd}
+.layui-card-header .header_t{font-size: 18px;color: #484d5e;display: inline-block;line-height: 42px;height: 42px;width: 78%;float: left;}
+.layui-card-header .header_type_development{float: right;margin-top:8px;background: #fff;border:1px solid #FF5722;color: #FF5722}
+.layui-card-header .header_type_test{float: right;margin-top:8px;background: #fff;border:1px solid #FFB800;color: #FFB800}
+.layadmin-takerates .layui-progress h3{font-size: 16px;color: #999}
+.layui-card-body{padding: 0 15px;margin: 10px 0}
+.layui-card-body .layui-solid{border-right: 1px solid #ddd}
+.number p{font-size: 16px;color: #999}
+.number p.number_n{color: #333}
+.number p.number_n span{color: #37aff7}
+.layui-card-cont{padding: 30px 15px 0px 15px;display: inline-block;width:96%;}
+.layui-card-cont p{float: left;color: #484d5e;line-height: 55px;margin-right: 20px;font-size: 16px}
+.layui-content-ul li{margin: 0 10px;float: left;display: inline-block;margin-bottom: 10px;}
+.layui-content-ul li img{border-radius: 50%;}
+.layui-content-ul{width: 90%;float: left}
+.layui-fluid .layui-col-md6:nth-child(4n+4){clear: both}
+
+
+/*登录*/
+.layui-w-auto{width: 1200px;margin: 14% auto 0 auto}
+.layui-form-item-login{width: 330px;background: #fff;border: 1px solid #37aff7;box-shadow: 1px 1px 5px 1px #82a4ee2e;border-radius: 5px;float: right;margin-right: 50px;padding: 20px 30px;}
+.layadmin-user-login-box h2{text-align: center;color: #a1afca;}
+.layui-form-item{margin-top: 30px;border: 1px solid #37aff7;padding:7px;border-radius: 5px;}
+.layui-form-item label{font-size: 30px;color: #a1afca}
+.layui-form-item {position: relative;}
+.layadmin-user-login-icon {position: absolute;left: 11px;top: 10px;text-align: center; color: #d2d2d2;}
+.layui-form-item .layui-input {padding-left: 48px;border: none;font-size: 16px;color: #333}
+.layui-form-checkbox[lay-skin=primary]:hover i{border-color:#37aff7;}
+.layui-form-checked[lay-skin=primary] i{background: #37aff7!important;background-color:#37aff7!important;}
+.forget-pwd{float: right;}
+.layui-form-checkbox[lay-skin=primary] span,.layui-form-items a,.rigst-number a{color: #a1afca;}
+.btn-fluid{height: 50px!important;line-height: 50px!important;font-size: 16px;margin-top: 20px;border-radius: 5px;box-shadow: 0px -1px 15px -1px #82a4ee2e;}
+.rigst-number{margin: 20px 0px;text-align: center;color: #a1afca;}
+
+
+
+/*首页*/
+.highcharts-credits{display: none}
+#partyChart,#contracting{background: #fff;padding: 50px 0 20px 0;}
+
+.layui-solids{text-align: center;border:1px solid #ddd;padding: 20px 0}
+.layui-stat-type{font-size: 14px;color: #333;margin-top: 10px;}
+.conde-row{margin:20px 0;padding-bottom: 20px;}
+.layui-number{color: #ff5069;font-size: 24px;margin-top: 15px;}
+.more{float: right;color: #999;font-size: 16px;}
+.layui-fluids{padding: 15px;position: relative;}
+.status-cont{line-height: 50px;font-size: 16px;color: #333;float: left}
+.status-cont span{color: #999;margin: 0px 5px;}
+.status-cont span.design{color: #4193e7}
+.status-time{float: right;color: #666;line-height: 50px;font-size: 16px;}
+.layui-status-img{float: left}
+.card-status{padding: 0;margin: 20px 0}
+.card-status dd{display: inline-block;width: 97%;background: #fafafa;border-radius: 5px;border:1px solid #ddd!important;padding: 15px 10px;margin-bottom: 8px;}
+.progress{padding: 15px;}
+.projet .taker{border:1px solid #ddd;border-radius: 5px;padding: 15px;margin-bottom: 20px;}
+.layui-form-itel{width: 15%;float: right;margin: 25px;}
+.layui-form-itel label{width: auto}

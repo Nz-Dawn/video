@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zd.video.dao.sys.MenuDao">
+	<!-- 增加菜单 -->
+	<insert id="insertMenu">
+		insert t_menu(
+			pid,
+			name,
+			cname,
+			url,
+			img,
+			role,
+			info,
+			morder
+		)values(
+			#{pid},
+			#{name},
+			#{cname},
+			#{url},
+			#{img},
+			#{role},
+			#{info},
+			#{morder}
+		)
+	</insert>
+	
+	<!-- 根据ID获取菜单信息 -->
+	<select id="getMenuById" resultType="com.zd.video.po.sys.Menu">
+		select *from t_menu where id=#{id}
+	</select>
+	
+	<!-- 根据父级菜单ID获取菜单列表 -->
+	<select id="getMenuListByPid" resultType="com.zd.video.po.sys.Menu">
+		select *from t_menu where pid=#{pid}
+		<if test="null!=cname and cname!=''">
+			and cname !=#{cname}
+		</if>
+		order by morder asc
+	</select>
+	
+	<!-- 查询全部 -->
+	<select id="getMenuList" resultType="com.zd.video.po.sys.Menu">
+		select *from t_menu where 1=1
+		<if test="null!=pid and pid !='' or pid==0">
+			and pid =#{pid}
+		</if>
+		order by morder asc
+	</select>
+	
+	<select id="getMenuListCount" resultType="Integer">
+		select count(id) from t_menu where 1=1
+		<if test="null!=pid and pid !='' or pid==0">
+			and pid =#{pid}
+		</if>
+	</select>
+	
+	 
+	<!-- 修改菜单信息 -->
+	<update id="updateMenuById">
+		update t_menu set
+			pid =#{pid},
+			name =#{name},
+			cname =#{cname},
+			url =#{url},
+			img =#{img},
+			role =#{role},
+			info =#{info},
+			morder =#{morder}
+			where id =#{id}
+	</update>
+	
+	<!-- 删除菜单信息 -->
+	<delete id="deleteMenuById">
+		delete from t_menu where id in
+		 <foreach collection="array" item="arr" index="no" open="("
+            separator="," close=")">
+            #{arr}
+        </foreach>
+	</delete>
+</mapper>

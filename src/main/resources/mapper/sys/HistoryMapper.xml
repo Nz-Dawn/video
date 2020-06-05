@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zd.video.dao.sys.HistoryMapper">
+  <resultMap id="BaseResultMap" type="com.zd.video.po.sys.History">
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="videoid" jdbcType="INTEGER" property="videoid" />
+  </resultMap>
+  <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from t_history where userid = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByUserId" parameterType="java.lang.Integer" >
+    delete from t_history where userid = #{userid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByVideoId" parameterType="java.lang.Integer" >
+    delete from t_history where videoid = #{videoid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zd.video.po.sys.History">
+    delete from t_history where
+        videoid = #{videoid,jdbcType=INTEGER}
+        and userid = #{userid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zd.video.po.sys.History">
+    insert into t_history (userid, videoid)
+    values (#{userid,jdbcType=INTEGER}, #{videoid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zd.video.po.sys.History">
+    insert into t_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="videoid != null">
+        videoid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="videoid != null">
+        #{videoid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

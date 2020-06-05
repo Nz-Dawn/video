@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zd.video.dao.sys.VideoMapper">
+  <resultMap id="BaseResultMap" type="com.zd.video.po.sys.Video">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="desception" jdbcType="VARCHAR" property="desception" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="star" jdbcType="INTEGER" property="star" />
+    <result column="category" jdbcType="INTEGER" property="category" />
+    <result column="iscandown" jdbcType="INTEGER" property="iscandown" />
+    <result column="createtime" jdbcType="VARCHAR" property="createtime" />
+    <result column="createuserid" jdbcType="INTEGER" property="createuserid" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
+    <result column="cover" jdbcType="VARCHAR" property="cover" />
+    <result column="createuname" jdbcType="VARCHAR" property="createuname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, desception, url, star, category, iscandown, createtime, createuserid, time, cover,createuname
+  </sql>
+  <select id="selectAllVideo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_video
+    where 1=1
+  </select>
+  <select id="selectByIds" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select distinct
+    <include refid="Base_Column_List" />
+    from t_video where id in (
+    <foreach collection="list"  item="id" index="index" separator=",">
+      #{id}
+    </foreach> )
+  </select>
+  <select id="selectByCategorys" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select distinct
+    <include refid="Base_Column_List" />
+    from t_video where category in (
+    <foreach collection="list"  item="category" index="index" separator=",">
+      #{category}
+    </foreach> )
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_video
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_video
+    where createuserid = #{createuserid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByDesc" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select distinct
+    <include refid="Base_Column_List" />
+    from t_video
+    where desception like  concat(concat("%",#{desception,jdbcType=VARCHAR}),"%")
+  </select>
+  <select id="selectMyVideoByDesc" parameterType="com.zd.video.po.sys.Video" resultMap="BaseResultMap">
+    select distinct
+    <include refid="Base_Column_List" />
+    from t_video
+    where desception like  concat(concat("%",#{desception,jdbcType=VARCHAR}),"%")
+    and  createuserid = #{createuserid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCategory" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select distinct
+    <include refid="Base_Column_List" />
+    from t_video
+    where category = #{category,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_video
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zd.video.po.sys.Video">
+    insert into t_video (id, desception, url, 
+      star, category, iscandown, 
+      createtime, createuserid, time, cover,createuname
+      )
+    values (#{id,jdbcType=INTEGER}, #{desception,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{star,jdbcType=INTEGER}, #{category,jdbcType=INTEGER}, #{iscandown,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=VARCHAR}, #{createuserid,jdbcType=INTEGER}, #{time,jdbcType=VARCHAR},
+      #{cover,jdbcType=VARCHAR},#{createuname,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zd.video.po.sys.Video">
+    insert into t_video
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="desception != null">
+        desception,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="star != null">
+        star,
+      </if>
+      <if test="category != null">
+        category,
+      </if>
+      <if test="iscandown != null">
+        iscandown,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="createuserid != null">
+        createuserid,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="cover != null">
+      cover,
+    </if>
+      <if test="createuname != null">
+        createuname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="desception != null">
+        #{desception,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="star != null">
+        #{star,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="iscandown != null">
+        #{iscandown,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="createuserid != null">
+        #{createuserid,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="cover != null">
+        #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="createuname != null">
+        #{createuname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zd.video.po.sys.Video">
+    update t_video
+    <set>
+      <if test="desception != null">
+        desception = #{desception,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="star != null">
+        star = #{star,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        category = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="iscandown != null">
+        iscandown = #{iscandown,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="createuserid != null">
+        createuserid = #{createuserid,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="cover != null">
+        cover = #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="createuname != null">
+        createuname = #{createuname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zd.video.po.sys.Video">
+    update t_video
+    set desception = #{desception,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      star = #{star,jdbcType=INTEGER},
+      category = #{category,jdbcType=INTEGER},
+      iscandown = #{iscandown,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=VARCHAR},
+      createuserid = #{createuserid,jdbcType=INTEGER},
+      createuname = #{createuname,jdbcType=VARCHAR},
+      time = #{time,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zd.video.dao.sys.PersonInfoMapper">
+  <resultMap id="BaseResultMap" type="com.zd.video.po.sys.PersonInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="tname" jdbcType="VARCHAR" property="tname" />
+    <result column="turl" jdbcType="VARCHAR" property="turl" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="nativePlace" jdbcType="VARCHAR" property="nativeplace" />
+    <result column="nation" jdbcType="VARCHAR" property="nation" />
+    <result column="bloodType" jdbcType="VARCHAR" property="bloodtype" />
+    <result column="birthPlace" jdbcType="VARCHAR" property="birthplace" />
+    <result column="maritalStatus" jdbcType="VARCHAR" property="maritalstatus" />
+    <result column="contactAddress" jdbcType="VARCHAR" property="contactaddress" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, tname, turl, birthday, sex, phone, email, nativePlace, nation, bloodType, birthPlace, 
+    maritalStatus, contactAddress
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_person
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_person
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zd.video.po.sys.PersonInfo">
+    insert into t_person (id, tname, turl, 
+      birthday, sex, phone, 
+      email, nativePlace, nation, 
+      bloodType, birthPlace, maritalStatus, 
+      contactAddress)
+    values (#{id,jdbcType=INTEGER}, #{tname,jdbcType=VARCHAR}, #{turl,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{nativeplace,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR}, 
+      #{bloodtype,jdbcType=VARCHAR}, #{birthplace,jdbcType=VARCHAR}, #{maritalstatus,jdbcType=VARCHAR}, 
+      #{contactaddress,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zd.video.po.sys.PersonInfo">
+    insert into t_person
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="tname != null">
+        tname,
+      </if>
+      <if test="turl != null">
+        turl,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="nativeplace != null">
+        nativePlace,
+      </if>
+      <if test="nation != null">
+        nation,
+      </if>
+      <if test="bloodtype != null">
+        bloodType,
+      </if>
+      <if test="birthplace != null">
+        birthPlace,
+      </if>
+      <if test="maritalstatus != null">
+        maritalStatus,
+      </if>
+      <if test="contactaddress != null">
+        contactAddress,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="tname != null">
+        #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="turl != null">
+        #{turl,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="nativeplace != null">
+        #{nativeplace,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null">
+        #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="bloodtype != null">
+        #{bloodtype,jdbcType=VARCHAR},
+      </if>
+      <if test="birthplace != null">
+        #{birthplace,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalstatus != null">
+        #{maritalstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="contactaddress != null">
+        #{contactaddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zd.video.po.sys.PersonInfo">
+    update t_person
+    <set>
+      <if test="tname != null">
+        tname = #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="turl != null">
+        turl = #{turl,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="nativeplace != null">
+        nativePlace = #{nativeplace,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null">
+        nation = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="bloodtype != null">
+        bloodType = #{bloodtype,jdbcType=VARCHAR},
+      </if>
+      <if test="birthplace != null">
+        birthPlace = #{birthplace,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalstatus != null">
+        maritalStatus = #{maritalstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="contactaddress != null">
+        contactAddress = #{contactaddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zd.video.po.sys.PersonInfo">
+    update t_person
+    set tname = #{tname,jdbcType=VARCHAR},
+      turl = #{turl,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      nativePlace = #{nativeplace,jdbcType=VARCHAR},
+      nation = #{nation,jdbcType=VARCHAR},
+      bloodType = #{bloodtype,jdbcType=VARCHAR},
+      birthPlace = #{birthplace,jdbcType=VARCHAR},
+      maritalStatus = #{maritalstatus,jdbcType=VARCHAR},
+      contactAddress = #{contactaddress,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
